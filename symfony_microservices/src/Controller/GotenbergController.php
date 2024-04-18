@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Service\GotenbergService;
@@ -19,6 +18,11 @@ class GotenbergController extends AbstractController
 
     #[Route("/generate-pdf", name: "generate_pdf", methods: ["POST"])]
 
+    /**
+     * @Route("/generate-pdf", name="generate_pdf", methods={"POST"})
+     * @IsGranted("ROLE_USER")
+     */
+
     public function generatePdf(Request $request): Response
     {
         $htmlContent = $request->getContent();
@@ -27,7 +31,8 @@ class GotenbergController extends AbstractController
 
         return new Response($pdfContent, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="generated.pdf"',
+            'Content-Disposition' => 'inline; filename="generated.pdf"',
         ]);
     }
 }
+?>

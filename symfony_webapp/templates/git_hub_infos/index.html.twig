@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GitHubInfosController!{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>Informations GitHub</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ infoGithub.name }}</h5>
+            <p class="card-text">{{ infoGithub.description }}</p>
+            {{ dump(infoGithub)}}
+            <a href="{{ infoGithub.html_url }}" class="btn btn-primary" target="_blank">Voir sur GitHub</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
