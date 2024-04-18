@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+###> doctrine/doctrine-bundle ###
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    ports:
+      - "3000:3000"
+    networks:
+      - symfony_network_microservice
+
+###> Symfony apache project container
+  www:
+    build: ./docker/php
+    container_name: php_microservice
+    ports:
+      - "8000:80"
+    volumes:
+        - ./docker/php/vhosts:/etc/apache2/sites-enabled
+        - ./:/var/www
+    restart: always
+    networks:
+        - symfony_network_microservice
+
+networks:
+  symfony_network_microservice:
+    driver: bridge
