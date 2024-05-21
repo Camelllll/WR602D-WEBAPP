@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+###> doctrine/doctrine-bundle ###
+  database:
+    image: 'mysql:latest'
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: wr602d
+    ports:
+      - '3306:3306'
+    volumes:
+      - database_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  app:
+    container_name: app-webapp
+    image: d80756260b2f30789df34e2ea3ebd32316b25b894fc146df6f42372ad5fec560
+    ports:
+      - '8080:80'
+    volumes:
+      - .:/var/www
+    networks:
+      - app_network
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
+
+networks:
+  app_network:
+    external: true

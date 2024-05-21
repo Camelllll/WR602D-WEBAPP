@@ -1,27 +1,24 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
   gotenberg:
+    container_name: gotenberg
     image: gotenberg/gotenberg:8
     ports:
       - "3000:3000"
     networks:
-      - symfony_network_microservice
-
-###> Symfony apache project container
-  www:
-    build: ./docker/php
-    container_name: php_microservice
+      - app_network
+  
+  app:
+    container_name: app-microservice
+    image: d80756260b2f30789df34e2ea3ebd32316b25b894fc146df6f42372ad5fec560
     ports:
-      - "8000:80"
+      - '8000:80'
     volumes:
-        - ./docker/php/vhosts:/etc/apache2/sites-enabled
-        - ./:/var/www
-    restart: always
+      - .:/var/www
     networks:
-        - symfony_network_microservice
+      - app_network
 
 networks:
-  symfony_network_microservice:
-    driver: bridge
+  app_network:
+    external: true
