@@ -19,7 +19,7 @@ Pour mettre en place le projet sur votre machine locale, suivez les étapes ci-d
    Ouvrez un terminal et exécutez la commande suivante :
 
    ```bash
-   git clone https://github.com/<votre-nom-d'utilisateur>/<nom-du-dépôt>.git
+   git clone https://github.com/Camelllll/WR602D-WEBAPP.git
   
 
 ✨ J'espère que vous apprécierez explorer ce projet et de découvrir les différentes fonctionnalités qu'il offre !
