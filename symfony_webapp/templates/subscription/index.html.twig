@@ -89,37 +89,10 @@
 </nav>
 
 <div class="container main-section">
-    <h1>Upload and View PDF</h1>
+    <h1>Subscribtion</h1>
     <div class="form-container">
-        {% if form is defined %}
-            {{ form_start(form) }}
-                <div class="form-group">
-                    {{ form_label(form.title) }}
-                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(form.url) }}
-                    {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                <div class="form-group drop-zone">
-                    {{ form_label(form.file) }}
-                    {{ form_widget(form.file, {'attr': {'class': 'form-control-file'}}) }}
-                    <p>Drag & drop your file here</p>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-upload"></i> Submit
-                </button>
-            {{ form_end(form) }}
-        {% else %}
-            <p>The form will be displayed here.</p>
-        {% endif %}
+
     </div>
-    {% if pdfPath is defined %}
-        <div class="mt-4">
-            <h5>PDF Preview:</h5>
-            <embed src="{{ asset(pdfPath) }}" type="application/pdf" width="100%" height="500px" />
-        </div>
-    {% endif %}
 </div>
 {% endblock %}
 
