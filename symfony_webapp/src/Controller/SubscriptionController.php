@@ -27,28 +27,23 @@ class SubscriptionController extends AbstractController
     public function select(int $id, SubscriptionRepository $subscriptionRepository, EntityManagerInterface $entityManager): Response
     {
         $subscription = $subscriptionRepository->find($id);
-
+    
         if (!$subscription) {
             throw $this->createNotFoundException('Subscription not found');
         }
-
+    
         $user = $this->getUser();
         if ($user) {
-            // Reset PDF limits for all subscriptions
-            $subscriptions = $subscriptionRepository->findAll();
-            foreach ($subscriptions as $sub) {
-                if ($sub !== $subscription) {
-                    $sub->setPdfLimit($sub->getPdfLimit()); // This assumes getPdfLimit() returns the base value
-                    $entityManager->persist($sub);
-                }
-            }
-
             // Set the new subscription for the user
             $user->setSubscription($subscription);
+    
+            // Reset the PDF limit of the user's subscription to its base value
+            $user->getSubscription()->setPdfLimit($subscription->getBasePdfLimit());
+    
             $entityManager->persist($user);
             $entityManager->flush();
         }
-
+    
         return $this->redirectToRoute('app_subscription');
     }
 }
