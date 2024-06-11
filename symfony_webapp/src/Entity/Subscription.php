@@ -76,10 +76,10 @@ class Subscription
         return $this->pdfLimit;
     }
 
-    public function setPdfLimit(int $pdfLimit): static
+    public function setPdfLimit(?int $pdfLimit): self
     {
         $this->pdfLimit = $pdfLimit;
-
+    
         return $this;
     }
 

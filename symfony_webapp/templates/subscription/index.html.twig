@@ -1,6 +1,7 @@
+{# templates/subscription/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}I Hate PDF{% endblock %}
+{% block title %}Souscription{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -30,12 +31,28 @@
     </div>
 </nav>
 
+
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Subscription</h1>
-        <div class="form-container">
-            <!-- Form content goes here -->
-        </div>
+    <div class="container mx-auto py-12">
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-800">Choisissez une offre de souscription</h1>
+        <div class="flex flex-wrap justify-center">
+            {% for subscription in subscriptions %}
+            <div class="h-full max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">{{ subscription.title }}</div>
+                    <p class="text-gray-700 text-base">
+                        {{ subscription.description }}
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ subscription.pdfLimit }} PDFs / mois</span>
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ subscription.price }} € / mois</span>
+                </div>
+                <div class="px-6 py-4">
+                    <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Souscrire</a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
