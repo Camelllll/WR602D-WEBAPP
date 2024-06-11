@@ -35,25 +35,15 @@
         <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Mon compte</h1>
         <div>
             <h2 class="text-xl font-bold mb-4 text-gray-800">Historique de génération de PDF</h2>
-            <ul>
-                <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span>Génération #1</span>
-                    <span>10€</span>
-                </li>
-                <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span>Génération #2</span>
-                    <span>20€</span>
-                </li>
-                <li class="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span>Génération #3</span>
-                    <span>30€</span>
-                </li>
-            </ul>
+            {% if app.user and app.user.subscription %}
+                <p>Nombre de PDF restant disponible avec votre abonnement : {{ app.user.subscription.getPdfLimit() }}</p>
+            {% endif %}
             <br>
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Mon historique</h3>
+        </div>
             <a href="/logout" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
                 Déconnexion
             </a>
-        </div>
     </div>
 </div>
 
