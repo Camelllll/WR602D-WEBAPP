@@ -21,9 +21,10 @@
             <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
             <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
             {% if app.user %}
-                <a class="text-gray-300 hover:text-white" href="{{ path('app_logout') }}">Déconnexion</a>
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
             {% else %}
-                <a class="text-gray-300 hover:text-white" href="{{ path('app_login') }}">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
             {% endif %}
         </div>
     </div>

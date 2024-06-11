@@ -20,8 +20,12 @@
             <a class="text-gray-300 hover:text-white" href="/">Accueil</a>
             <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
             <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
-            <a class="text-gray-300 hover:text-white" href="/login">Login</a>
-            <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
         </div>
     </div>
 </nav>

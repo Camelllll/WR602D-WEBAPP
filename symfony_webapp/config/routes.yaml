@@ -28,6 +28,6 @@ history:
     path: /history
     controller: App\Controller\HistoryController::index
 
-logout:
-    path: /logout
-    controller: App\Controller\SecurityController::logout
+account:
+    path: /account
+    controller: App\Controller\AccountController::index

@@ -21,8 +21,12 @@
             <a class="text-gray-300 hover:text-white" href="/">Accueil</a>
             <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
             <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
-            <a class="text-gray-300 hover:text-white" href="/login">Login</a>
-            <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
         </div>
     </div>
 </nav>
@@ -41,7 +45,7 @@
             </div>
         {% endif %}
 
-        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Please sign in</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Se Connecter</h1>
 
         <form method="post">
             <div class="mb-4">
@@ -49,7 +53,7 @@
                 <input type="email" name="_username" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ last_username }}" required autofocus>
             </div>
             <div class="mb-4">
-                <label for="password" class="block text-gray-700">Password</label>
+                <label for="password" class="block text-gray-700">Mot de passe</label>
                 <input type="password" name="_password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocomplete="current-password" required>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
