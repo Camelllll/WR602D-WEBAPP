@@ -27,3 +27,7 @@ pdf:
 history:
     path: /history
     controller: App\Controller\HistoryController::index
+
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
