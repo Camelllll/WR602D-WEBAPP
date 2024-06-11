@@ -31,3 +31,7 @@ history:
 account:
     path: /account
     controller: App\Controller\AccountController::index
+
+subscription_select:
+    path: /subscription/select/{id}
+    controller: App\Controller\SubscriptionController::select

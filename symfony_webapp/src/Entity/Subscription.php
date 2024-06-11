@@ -1,11 +1,11 @@
 <?php
 
+// src/Entity/Subscription.php
+
 namespace App\Entity;
 
-use App\Repository\SubscriptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
@@ -19,11 +19,14 @@ class Subscription
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
     private ?int $pdfLimit = null;
+
+    #[ORM\Column]
+    private ?int $basePdfLimit = null; // Add this attribute
 
     #[ORM\Column]
     private ?float $price = null;
@@ -31,9 +34,6 @@ class Subscription
     #[ORM\Column(length: 255)]
     private ?string $media = null;
 
-    /**
-     * @var Collection<int, User>
-     */
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'subscription')]
     private Collection $users;
 
@@ -76,9 +76,21 @@ class Subscription
         return $this->pdfLimit;
     }
 
-    public function setPdfLimit(int $pdfLimit): static
+    public function setPdfLimit(?int $pdfLimit): self
     {
         $this->pdfLimit = $pdfLimit;
+    
+        return $this;
+    }
+
+    public function getBasePdfLimit(): ?int
+    {
+        return $this->basePdfLimit;
+    }
+
+    public function setBasePdfLimit(?int $basePdfLimit): self
+    {
+        $this->basePdfLimit = $basePdfLimit;
 
         return $this;
     }

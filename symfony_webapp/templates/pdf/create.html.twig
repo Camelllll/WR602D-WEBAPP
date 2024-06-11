@@ -65,6 +65,9 @@
                 <embed src="{{ asset(pdfPath) }}" type="application/pdf" width="100%" height="500px" class="border border-gray-300 rounded-lg shadow-sm" />
             </div>
         {% endif %}
+    {% if app.user and app.user.subscription %}
+        <p>Nombre de PDF restant : {{ app.user.subscription.getPdfLimit() }}</p>
+    {% endif %}
     </div>
 </div>
 

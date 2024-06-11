@@ -8,11 +8,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AccountController extends AbstractController
 {
-    #[Route('/account', name: 'app_account')]
+    #[Route('/account', name: 'account')]
     public function index(): Response
     {
+        $user = $this->getUser();
+        $subscription = $user->getSubscription();
+
         return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
+            'subscription' => $subscription,
+            'user' => $user,
         ]);
     }
 }
