@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}I Hate PDF - Inscription{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white text-xl font-bold" href="/">I HATE PDF</a>
+        <button class="text-white lg:hidden" id="nav-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <div class="hidden lg:flex space-x-4" id="nav-content">
+            <a class="text-gray-300 hover:text-white" href="/">Accueil</a>
+            <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
+            <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Inscription</h1>
+        {{ form_errors(registrationForm) }}
+        {{ form_start(registrationForm) }}
+            <div class="mb-4">
+                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(registrationForm.email, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(registrationForm.plainPassword, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(registrationForm.firstname, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.firstname, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(registrationForm.firstname, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(registrationForm.lastname, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.lastname, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(registrationForm.lastname, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+            </div>
+            <div class="mb-4">
+                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-checkbox text-indigo-600'}}) }}
+                {{ form_label(registrationForm.agreeTerms, 'Agree to terms and conditions', {'label_attr': {'class': 'ml-2 block text-sm font-medium text-gray-700'}}) }}
+                {{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('nav-toggle').onclick = function() {
+            document.getElementById('nav-content').classList.toggle('hidden');
+        }
+    </script>
+{% endblock %}

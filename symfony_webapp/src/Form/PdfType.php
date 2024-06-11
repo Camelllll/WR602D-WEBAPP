@@ -29,10 +29,6 @@ class PdfType extends AbstractType
                 'required' => false,
                 'attr' => ['accept' => '.html'],
             ])
-            ->add('html', TextType::class, [
-                'label' => 'HTML',
-                'required' => false,
-            ])
         ;
     }
 

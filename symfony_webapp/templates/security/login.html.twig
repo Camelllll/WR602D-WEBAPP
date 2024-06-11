@@ -1,0 +1,76 @@
+{# templates/security/login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}I Hate PDF - Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white text-xl font-bold" href="/">I HATE PDF</a>
+        <button class="text-white lg:hidden" id="nav-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <div class="hidden lg:flex space-x-4" id="nav-content">
+            <a class="text-gray-300 hover:text-white" href="/">Accueil</a>
+            <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
+            <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        {% if error %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-4">
+                You are logged in as {{ app.user.email }}, <a class="text-blue-500 hover:underline" href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Se Connecter</h1>
+
+        <form method="post">
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700">Email</label>
+                <input type="email" name="_username" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ last_username }}" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700">Mot de passe</label>
+                <input type="password" name="_password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocomplete="current-password" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline" type="submit">
+                Sign in
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('nav-toggle').onclick = function() {
+            document.getElementById('nav-content').classList.toggle('hidden');
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
