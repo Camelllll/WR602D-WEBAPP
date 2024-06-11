@@ -111,4 +111,21 @@ class PdfController extends AbstractController
             'pdfHistories' => $pdfHistories,
         ]);
     }
+
+    #[Route('/pdf/delete/{id}', name: 'delete_pdf')]
+    public function deletePdf($id): Response
+    {
+        // Récupérez le PDF à partir de la base de données en fonction de son ID
+        $pdf = $this->entityManager->getRepository(PdfHistory::class)->find($id);    
+        if (!$pdf) {
+            throw $this->createNotFoundException('PDF non trouvé avec l\'ID : ' . $id);
+        }
+    
+        // Supprimez le PDF de la base de données
+        $this->entityManager->remove($pdf);
+        $this->entityManager->flush();
+    
+        // Redirigez l'utilisateur vers une page de confirmation ou ailleurs
+        return $this->redirectToRoute('account');
+    }
 }
