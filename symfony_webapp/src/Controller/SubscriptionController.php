@@ -16,6 +16,12 @@ class SubscriptionController extends AbstractController
     #[Route('/subscription', name: 'app_subscription')]
     public function index(SubscriptionRepository $subscriptionRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('app_login');
+        }
+
         $subscriptions = $subscriptionRepository->findAll();
 
         return $this->render('subscription/index.html.twig', [
@@ -42,6 +48,9 @@ class SubscriptionController extends AbstractController
     
             $entityManager->persist($user);
             $entityManager->flush();
+        } else {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette fonctionnalité.');
+            return $this->redirectToRoute('app_login');
         }
     
         return $this->redirectToRoute('app_subscription');
