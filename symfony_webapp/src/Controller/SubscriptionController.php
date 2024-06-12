@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/SubscriptionController.php
-
 namespace App\Controller;
 
 use App\Entity\Subscription;

@@ -45,6 +45,9 @@ class PdfController extends AbstractController
     #[Route('/create', name: 'pdf_create')]
     public function create(Request $request): Response
     {
+        // Empêcher l'accès à cette page si l'utilisateur n'est pas connecté
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $user = $this->getUser();
         $form = $this->createForm(PdfType::class);
         $form->handleRequest($request);
@@ -115,17 +118,16 @@ class PdfController extends AbstractController
     #[Route('/pdf/delete/{id}', name: 'delete_pdf')]
     public function deletePdf($id): Response
     {
-        // Récupérez le PDF à partir de la base de données en fonction de son ID
+        // Récupérez le PDF
         $pdf = $this->entityManager->getRepository(PdfHistory::class)->find($id);    
         if (!$pdf) {
             throw $this->createNotFoundException('PDF non trouvé avec l\'ID : ' . $id);
         }
     
-        // Supprimez le PDF de la base de données
+        // Supprimez le PDF
         $this->entityManager->remove($pdf);
         $this->entityManager->flush();
     
-        // Redirigez l'utilisateur vers une page de confirmation ou ailleurs
         return $this->redirectToRoute('account');
     }
 }
