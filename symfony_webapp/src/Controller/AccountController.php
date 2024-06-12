@@ -14,10 +14,9 @@ class AccountController extends AbstractController
     {
         $user = $this->getUser();
 
-        // Récupérer le repository de l'entité PdfHistory
         $pdfHistoryRepository = $em->getRepository('App\Entity\PdfHistory');
         
-        // Récupérer l'historique des PDFs pour l'utilisateur actuel
+        // Récupérer l'historique des PDF
         $pdfs = $pdfHistoryRepository->findBy(['user' => $user]);
 
         return $this->render('account/index.html.twig', [

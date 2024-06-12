@@ -1,6 +1,5 @@
 <?php 
 
-// src/Form/SubscriptionFormType.php
 namespace App\Form;
 
 use App\Entity\Subscription;
