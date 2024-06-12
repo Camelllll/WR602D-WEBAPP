@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}I Hate PDF{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white text-xl font-bold" href="/">I HATE PDF</a>
+        <button class="text-white lg:hidden" id="nav-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <div class="hidden lg:flex space-x-4" id="nav-content">
+            <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
+            <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Upload and View PDF</h1>
+        <div>
+            {% if form is defined %}
+                {{ form_start(form) }}
+                <div class="mb-4">
+                    {{ form_label(form.title, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                    {{ form_errors(form.title, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(form.url, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.url, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                    {{ form_errors(form.url, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
+                </div>
+                <div class="mb-4 drop-zone border-2 border-dashed border-indigo-600 rounded-lg p-4 text-center text-indigo-600 hover:bg-gray-100">
+                    {{ form_label(form.file, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.file, {'attr': {'class': 'mt-1 block w-full'}}) }}
+                    <p>Drag & drop your file here</p>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md">
+                    <i class="fas fa-upload"></i> Submit
+                </button>
+                {{ form_end(form) }}
+            {% else %}
+                <p>The form will be displayed here.</p>
+            {% endif %}
+        </div>
+        {% if pdfPath is defined %}
+            <div class="mt-4">
+                <h5 class="text-lg font-bold mb-2">PDF Preview:</h5>
+                <embed src="{{ asset(pdfPath) }}" type="application/pdf" width="100%" height="500px" class="border border-gray-300 rounded-lg shadow-sm" />
+            </div>
+        {% endif %}
+    {% if app.user and app.user.subscription %}
+        <p>Nombre de PDF restant : {{ app.user.subscription.getPdfLimit() }}</p>
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('nav-toggle').onclick = function() {
+            document.getElementById('nav-content').classList.toggle('hidden');
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

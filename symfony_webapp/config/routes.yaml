@@ -1,0 +1,41 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+registration:
+    path: /register
+    controller: App\Controller\SecurityController::registration
+
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+subscription:
+    path: /subscription
+    controller: App\Controller\SubscriptionController::index
+
+pdf:
+    path: /pdf
+    controller: App\Controller\PdfController::index
+
+history:
+    path: /history
+    controller: App\Controller\HistoryController::index
+
+account:
+    path: /account
+    controller: App\Controller\AccountController::index
+
+subscription_select:
+    path: /subscription/select/{id}
+    controller: App\Controller\SubscriptionController::select
+
+delete_pdf:
+    path: /pdf/delete/{id}
+    controller: App\Controller\PdfController::deletePdf

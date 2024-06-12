@@ -1,0 +1,88 @@
+{# templates/subscription/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Souscription{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white text-xl font-bold" href="/">I HATE PDF</a>
+        <button class="text-white lg:hidden" id="nav-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+        <div class="hidden lg:flex space-x-4" id="nav-content">
+            <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
+            <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
+            {% if app.user %}
+                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+            {% else %}
+                <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
+                <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div class="container mx-auto py-12">
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-800">Choisissez un Abonnement </h1>
+        <div class="flex flex-wrap justify-center">
+            {% for subscription in subscriptions %}
+                <div class="h-full max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">{{ subscription.title }}</div>
+                        <p class="text-gray-700 text-base">
+                            {{ subscription.description }}
+                        </p>
+                    </div>
+                    <div class="px-6 pt-4 pb-2">
+                        {% if subscription.title == 'Basic' %}
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">5 PDFs / mois</span>
+                        {% elseif subscription.title == 'Premium' %}
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">20 PDFs / mois</span>
+                        {% elseif subscription.title == 'Ultra' %}
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">100 PDFs / mois</span>
+                        {% endif %}
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ subscription.price }} € / mois</span>
+                    </div>
+                    <div class="px-6 py-4">
+                        {% if app.user.subscription == subscription %}
+                            <span class="text-gray-700">Vous avez choisi l'abonnement {{ subscription.title }}.</span>
+                            <span class="text-gray-700">Vous pouvez générer encore {{ subscription.pdfLimit }} PDFs par mois.</span>
+                        {% elseif app.user.subscription %}
+                            <a href="{{ path('subscription_select', {'id': subscription.id}) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Changer d'abonnement</a>
+                        {% else %}
+                            <a href="{{ path('subscription_select', {'id': subscription.id}) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Souscrire</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('nav-toggle').onclick = function() {
+            document.getElementById('nav-content').classList.toggle('hidden');
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
