@@ -35,3 +35,7 @@ account:
 subscription_select:
     path: /subscription/select/{id}
     controller: App\Controller\SubscriptionController::select
+
+delete_pdf:
+    path: /pdf/delete/{id}
+    controller: App\Controller\PdfController::deletePdf

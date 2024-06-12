@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}I Hate PDF{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -17,11 +17,10 @@
             </svg>
         </button>
         <div class="hidden lg:flex space-x-4" id="nav-content">
-            <a class="text-gray-300 hover:text-white" href="/">Accueil</a>
             <a class="text-gray-300 hover:text-white" href="/pdf/create">Génération PDF</a>
             <a class="text-gray-300 hover:text-white" href="/subscription">Souscrire</a>
             {% if app.user %}
-                <a class="text-gray-300 hover:text-white" href="/account">Mon compte</a>
+                <a class="text-gray-300 hover:text-white" href="{{ path('user_account') }}">Mon compte</a>
             {% else %}
                 <a class="text-gray-300 hover:text-white" href="/login">Connexion</a>
                 <a class="text-gray-300 hover:text-white" href="/register">Inscription</a>
@@ -40,13 +39,29 @@
             {% endif %}
             <br>
             <h3 class="text-xl font-bold mb-4 text-gray-800">Mon historique</h3>
+            <ul>
+                {% for pdf in pdfs %}
+                    <li class="flex items-center justify-between py-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-pdf text-red-500"></i>
+                            <span class="ml-2">{{ pdf.fileName }}</span> 
+                        </div>
+                        <div class="flex items">
+                            <span class="ml-2 text-gray-500">{{ pdf.generatedAt|date('Y-m-d H:i:s') }}</span>
+                        </div>
+                        <form action="{{ path('delete_pdf', {'id': pdf.id}) }}" method="POST">
+                            <button type="submit" class="ml-4 text-red-500">Supprimer</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-            <a href="/logout" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
-                Déconnexion
-            </a>
+        <br>
+        <a href="/logout" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
+            Déconnexion
+        </a>
     </div>
 </div>
-
 {% endblock %}
 
 {% block javascripts %}
